@@ -168,58 +168,37 @@
         <p>Penerimaan Peserta Didik Baru (PPDB) Periode 2026</p>
       </header>
 
-      <form>
-        <section>
-          <div class="section-header">Identitas Calon Siswa</div>
-          <div class="grid">
-            <div class="field full">
-              <label>Nama Lengkap (Sesuai Ijazah)</label>
-              <input type="text" placeholder="Masukkan nama lengkap" required />
-            </div>
-            <div class="field">
-              <label>NIK (Nomor Induk Kependudukan)</label>
-              <input type="number" placeholder="16 Digit NIK" />
-            </div>
-            <div class="field">
-              <label>NISN</label>
-              <input type="number" placeholder="Nomor Induk Siswa Nasional" />
-            </div>
-            <div class="field">
-              <label>Tempat Lahir</label>
-              <input type="text" placeholder="Kota Kelahiran" />
-            </div>
-            <div class="field">
-              <label>Tanggal Lahir</label>
-              <input type="date" />
-            </div>
-            <div class="field">
-              <label>Jenis Kelamin</label>
-              <select>
-                <option value="">Pilih</option>
-                <option>Laki-laki</option>
-                <option>Perempuan</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Agama</label>
-              <select>
-                <option>Islam</option>
-                <option>Kristen</option>
-                <option>Katolik</option>
-                <option>Hindu</option>
-                <option>Budha</option>
-                <option>Lainnya</option>
-              </select>
-            </div>
-            <div class="field full">
-              <label>Alamat Tinggal Sekarang</label>
-              <textarea
-                rows="2"
-                placeholder="Nama Jalan, No. Rumah, RT/RW, Kecamatan"
-              ></textarea>
-            </div>
-          </div>
-        </section>
+  <form action="#" method="POST">
+    <h2>Form Pendaftaran Siswa</h2>
+    
+    <label>NIS:</label><br>
+    <input type="number" name="nis" required><br><br>
+
+    <label>Nama Lengkap:</label><br>
+    <input type="text" name="nama" required><br><br>
+
+    <label>Jenis Kelamin:</label><br>
+    <select name="jenis_kelamin" required>
+        <option value="laki-laki">Laki-laki</option>
+        <option value="perempuan">Perempuan</option>
+    </select><br><br>
+
+    <label>Tempat Lahir:</label><br>
+    <input type="text" name="tempat_lahir"><br><br>
+
+    <label>Tanggal Lahir:</label><br>
+    <input type="date" name="tanggal_lahir" required><br><br>
+
+    <label>Alamat:</label><br>
+    <textarea name="alamat" required></textarea><br><br>
+
+    <label>Pilihan Jurusan 1:</label><br>
+    <select name="plh_jurusan1">
+        <option value="rpl">RPL</option>
+    </select><br><br>
+
+    <button type="submit">Daftar Sekarang</button>
+</form>
 
         <section>
           <div class="section-header">Data Orang Tua / Wali</div>
@@ -247,10 +226,14 @@
             <div class="field">
               <label>Penghasilan Rata-rata/Bulan</label>
               <select>
-                <option>< Rp 1.000.000</option>
+                <option>Rp 1.000.000</option>
                 <option>Rp 1.000.000 - Rp 3.000.000</option>
                 <option>Rp 3.000.000 - Rp 5.000.000</option>
-                <option>> Rp 5.000.000</option>
+                <option>Rp 5.000.000 - Rp 10.000.000</option>
+                <option>Rp 10.000.000 - Rp 20.000.000</option>
+                <option>Rp 20.000.000 - Rp 50.000.000</option>
+                <option>Rp 50.000.000 - Rp 100.000.000</option>
+                <option>> Rp 100.000.000</option>
               </select>
             </div>
           </div>
