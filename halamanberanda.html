@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SMK Negeri 4 Palembang | Unggul & IT Sentris</title>
+    <style>
+      /* Reset & Root Styles */
+      :root {
+        --primary-color: #004a99; /* Biru Formal */
+        --secondary-color: #ffd700; /* Kuning Emas */
+        --text-dark: #2d3436;
+        --text-light: #ffffff;
+        --bg-light: #f9f9f9;
+        --accent-color: #e67e22; /* Oranye untuk tombol daftar */
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      body {
+        line-height: 1.6;
+        color: var(--text-dark);
+        background-color: var(--bg-light);
+      }
+
+      /* Navigation */
+      nav {
+        background: var(--primary-color);
+        color: white;
+        padding: 1rem 8%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo {
+        font-size: 1.4rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+        align-items: center;
+      }
+
+      nav ul li {
+        margin-left: 20px;
+      }
+
+      nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        transition: 0.3s;
+      }
+
+      nav ul li a:hover {
+        color: var(--secondary-color);
+      }
+
+      /* Login & Register Buttons in Nav */
+      .nav-auth {
+        display: flex;
+        gap: 10px;
+        margin-left: 30px;
+        padding-left: 20px;
+        border-left: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .btn-login {
+        padding: 6px 15px;
+        border: 1px solid white;
+        border-radius: 5px;
+      }
+
+      .btn-register {
+        padding: 6px 15px;
+        background: var(--secondary-color);
+        color: var(--primary-color) !important;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+
+      /* Hero Section */
+      .hero {
+        background:
+          linear-gradient(rgba(0, 74, 153, 0.8), rgba(0, 74, 153, 0.8)),
+          url("https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1350&q=80");
+        background-size: cover;
+        background-position: center;
+        height: 80vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: white;
+        padding: 0 20px;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 15px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      .hero p {
+        font-size: 1.2rem;
+        max-width: 700px;
+        opacity: 0.9;
+        margin-bottom: 30px;
+      }
+
+      .cta-pendaftaran {
+        background: var(--secondary-color);
+        color: var(--primary-color);
+        padding: 15px 35px;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        transition: 0.3s;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .cta-pendaftaran:hover {
+        transform: scale(1.05);
+        background: white;
+      }
+
+      /* Section Styling */
+      section {
+        padding: 80px 10%;
+      }
+      .section-title {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+      .section-title h2 {
+        font-size: 2.2rem;
+        color: var(--primary-color);
+        position: relative;
+        padding-bottom: 10px;
+      }
+      .section-title h2::after {
+        content: "";
+        width: 80px;
+        height: 4px;
+        background: var(--secondary-color);
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      /* Profile Section */
+      .profile-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        align-items: center;
+      }
+      .profile-img img {
+        width: 100%;
+        border-radius: 15px;
+        box-shadow: 10px 10px 0 var(--secondary-color);
+      }
+
+      /* Jurusan Section */
+      .jurusan-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+      }
+
+      .card {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        border-top: 5px solid var(--primary-color);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        transition: 0.4s;
+      }
+
+      .card:hover {
+        transform: translateY(-10px);
+      }
+      .card h3 {
+        margin-bottom: 15px;
+        color: var(--primary-color);
+        font-size: 1.5rem;
+      }
+      .badge {
+        display: inline-block;
+        background: var(--secondary-color);
+        color: var(--primary-color);
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+
+      /* Footer */
+      footer {
+        background: #1a1a1a;
+        color: white;
+        padding: 50px 10% 20px;
+      }
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        margin-bottom: 30px;
+      }
+      .footer-bottom {
+        text-align: center;
+        border-top: 1px solid #333;
+        padding-top: 20px;
+        font-size: 0.9rem;
+        color: #888;
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 992px) {
+        nav {
+          flex-direction: column;
+          padding: 1rem;
+        }
+        nav ul {
+          margin-top: 15px;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        .nav-auth {
+          margin-left: 0;
+          margin-top: 10px;
+          border-left: none;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 2.2rem;
+        }
+        .profile-container {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav>
+      <div class="logo">SMKN 4 PALEMBANG</div>
+      <ul>
+        <li><a href="#beranda">Beranda</a></li>
+        <li><a href="#profil">Profil</a></li>
+        <li><a href="#jurusan">Jurusan</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <div class="nav-auth">
+          <li><a href="login.html" class="btn-login">Login</a></li>
+          <li><a href="register.html" class="btn-register">Daftar</a></li>
+        </div>
+      </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="beranda">
+      <h1>SMK NEGERI 4 PALEMBANG</h1>
+      <p>
+        Pusat Unggulan Teknologi dan Informasi di Sumatera Selatan. Menghasilkan
+        lulusan kompeten, berkarakter, dan siap kerja.
+      </p>
+      <a href="pendaftaran.html" class="cta-pendaftaran"
+        >Pendaftaran Siswa Baru</a
+      >
+    </header>
+
+    <!-- Profil Section -->
+    <section id="profil">
+      <div class="profile-container">
+        <div class="profile-img">
+          <img
+            src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80"
+            alt="Gedung SMKN 4"
+          />
+        </div>
+        <div class="profile-text">
+          <div class="section-title" style="text-align: left">
+            <h2 style="margin-left: 0; transform: none; left: 0">
+              Tentang Kami
+            </h2>
+          </div>
+          <p>
+            SMK Negeri 4 Palembang merupakan institusi pendidikan kejuruan yang
+            berfokus pada pengembangan sumber daya manusia di bidang teknologi
+            informasi dan industri. Kami berkomitmen menciptakan ekosistem
+            belajar yang inovatif sesuai dengan standar industri 4.0.
+          </p>
+          <br />
+          <p>
+            <strong>Visi:</strong> Menjadi SMK unggul yang menghasilkan lulusan
+            berakhlak mulia, profesional, dan berjiwa wirausaha.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Jurusan Section -->
+    <section id="jurusan" style="background-color: #f0f4f8">
+      <div class="section-title">
+        <h2>Kompetensi Keahlian</h2>
+      </div>
+      <div class="jurusan-grid">
+        <!-- Jurusan TKJ -->
+        <div class="card">
+          <span class="badge">IT & NETWORKING</span>
+          <h3>TKJ (Teknik Komputer Jaringan)</h3>
+          <p>
+            Mempelajari cara merakit komputer, instalasi sistem operasi,
+            membangun jaringan LAN/WAN, administrasi server, hingga keamanan
+            jaringan (Cyber Security).
+          </p>
+          <ul style="margin-top: 15px; padding-left: 20px; font-size: 0.9rem">
+            <li>Mikrotik & Cisco Academy</li>
+            <li>Cloud Computing</li>
+            <li>Network Administrator</li>
+          </ul>
+        </div>
+
+        <!-- Jurusan RPL -->
+        <div class="card">
+          <span class="badge">SOFTWARE DEVELOPMENT</span>
+          <h3>RPL (Rekayasa Perangkat Lunak)</h3>
+          <p>
+            Fokus pada pembuatan aplikasi berbasis Web, Mobile (Android/iOS),
+            dan Desktop. Siswa diajarkan logika pemrograman, basis data, dan
+            UI/UX design.
+          </p>
+          <ul style="margin-top: 15px; padding-left: 20px; font-size: 0.9rem">
+            <li>Web Programming (HTML, CSS, JS, PHP)</li>
+            <li>Mobile Apps (Flutter/React Native)</li>
+            <li>Database Management</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="kontak">
+      <div class="footer-content">
+        <div>
+          <h3>SMKN 4 PLG</h3>
+          <p>Mencetak generasi IT unggulan untuk Indonesia.</p>
+        </div>
+        <div>
+          <h4>Lokasi</h4>
+          <p>
+            Jl. Sersan Sani No. 1011, Talang Aman, Kec. Kemuning, Kota
+            Palembang, Sumatera Selatan.
+          </p>
+        </div>
+        <div>
+          <h4>Tautan Cepat</h4>
+          <ul style="list-style: none; font-size: 0.9rem; color: #888">
+            <li>
+              <a
+                href="dashboard.html"
+                style="color: #888; text-decoration: none"
+                >Dashboard Siswa</a
+              >
+            </li>
+            <li>
+              <a
+                href="pendaftaran.html"
+                style="color: #888; text-decoration: none"
+                >Form Pendaftaran</a
+              >
+            </li>
+            <li>
+              <a href="login.html" style="color: #888; text-decoration: none"
+                >Masuk Akun</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4>Kontak</h4>
+          <p>Email: info@smkn4palembang.sch.id<br />Telp: (0711) 123456</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 SMK Negeri 4 Palembang. All Rights Reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>
