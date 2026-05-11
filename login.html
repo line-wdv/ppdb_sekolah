@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgb(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY();
+            }
+        }
+
+        .logo {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .logo i {
+            font-size: 3.5rem;
+            color: 677eea;
+            margin-bottom: 15px;
+        }
+
+        .logo h1 {
+            color: #333;
+            font-size: 1.9rem;
+            font-weight: 700;
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .eye-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #677eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-btn.loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .remember-me input {
+            width: auto;
+            margin: 0;
+        }
+
+        .forgot-password {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            color: #999;
+            position: relative;
+        }
+
+        .divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e1e5e9;
+        }
+
+        .divider span {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 20px;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #c33;
+            display: none;
+        }
+
+        .success-message {
+            background: #efe;
+            color: #363;
+            padding: 12px;
+            border-radius:8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #363;
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 25px;
+                margin: 10px;
+            }
+
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <i class="fas fa-graduation-cap"></i>
+            <h1>Login PPDB</h1>
+            <p>Penerimaan peserta didik baru</p>
+        </div>
+
+        <div id="errorMessage" class="errorMessage">
+             <i class="fas fa-exclamation-circle"></i>
+            
+        </div>
+
+        <div id="successMessage" class="successMessage">
+            <i class="fas fa-check-circle"></i>
+            
+        </div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username"><i class="fas fa-user"></i></label>
+                <input type="text" id="username" name="username" required placeholder="Masukan NISN atau username">
+            </div>
+
+            <div class="form-group">
+                <label for="password"><i class="fas fa-lock"></i></label>
+                <input type="password" id="password" required placeholder="Masukan Password">
+                <i class="fas fa-eye eye-icon" id="tongglePassword"></i>
+            </div>
+
+            <div class="options">
+              <label class="remember-me">
+                <input type="checkbox" id="remember"> Ingat saya
+              </label>
+              <a href="#" class="forgot-password">Lupa Password</a>
+            </div>
+
+            <button type="submit" class="Login-btn" id="Login-btn">
+             <span id="btnText">Masuk</span>
+             <span id="btnSpinner" style="display: none;"><i class="fas fa-spinner fa-spin"></i></span>
+            </button>
+        </form>
+
+        <div class="divider">
+          <button>Belum punya akun</button>
+        </div>
+
+        <a href="#" class="Login-btn" style="background: #28a745; font-size: 1rem;"><i class="fas fa-user-plus"></i></a>
+    </div>
+</body>
