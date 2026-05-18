@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0d1741 0%, #0c3183 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -138,7 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .Login-btn {
             width: 100%;
             padding: 16px;
-            background: linear-gradient(135deg, #677eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #97bbd6 0%, #764ba2 100%);
             color: white;
             border: none;
             border-radius: 12px;
