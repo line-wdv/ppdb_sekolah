@@ -1,9 +1,48 @@
+<?php
+session_start();
+$error = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    $koneksi = mysqli_connect("localhost", "root", "", "ppdb_sekolah");
+
+    if (!$koneksi) {
+        $error = "Koneksi ke database gagal";
+    } else {
+        $username = mysqli_real_escape_string($koneksi, $username);
+        $password = mysqli_real_escape_string($koneksi, $password);
+
+        $query = "SELECT * FROM user WHERE email = '$username' OR nama = '$username'";
+        $result = mysqli_query($koneksi, $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            $user = mysqli_fetch_assoc($result);
+            
+            if ($password == $user['password']) {
+                $_SESSION['status_login'] = true;
+                $_SESSION['user_nama'] = $user['nama'];
+                header("Location: beranda.php");
+                exit;
+            } else {
+                $error = "Password yang kamu masukkan salah!";
+            }
+        } else {
+            $error = "Username atau Email belum terdaftar! Silakan registrasi terlebih dahulu.";
+        }
+        mysqli_close($koneksi);
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halaman login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -25,7 +64,7 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgb(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 420px;
             padding: 40px;
@@ -35,19 +74,19 @@
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY();
+                transform: translateY(20px);
             }
         }
 
         .logo {
             text-align: center;
             color: #667eea;
-            margin-bottom: 15px;
+            margin-bottom: 25px;
         }
 
         .logo i {
             font-size: 3.5rem;
-            color: 677eea;
+            color: #667eea;
             margin-bottom: 15px;
         }
 
@@ -61,6 +100,11 @@
             color: #666;
             font-size: 0.95rem;
             margin-top: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
         }
 
         .form-group input {
@@ -91,7 +135,7 @@
             font-size: 1.1rem;
         }
 
-        .login-btn {
+        .Login-btn {
             width: 100%;
             padding: 16px;
             background: linear-gradient(135deg, #677eea 0%, #764ba2 100%);
@@ -102,20 +146,18 @@
             cursor: pointer;
             transition: all 0.3s ease;
             margin-top: 10px;
+            display: block;
+            text-align: center;
+            text-decoration: none;
         }
 
-        .login-btn:hover {
+        .Login-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
 
-        .login-btn:active {
+        .Login-btn:active {
             transform: translateY(0);
-        }
-
-        .login-btn.loading {
-            opacity: 0.7;
-            cursor: not-allowed;
         }
 
         .options {
@@ -130,7 +172,9 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            cursor: pointer;
         }
+
         .remember-me input {
             width: auto;
             margin: 0;
@@ -164,8 +208,11 @@
         }
 
         .divider span {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 0 20px;
+            background: #fff;
+            padding: 0 15px;
+            position: relative;
+            z-index: 1;
+            font-size: 0.9rem;
         }
 
         .error-message {
@@ -174,17 +221,8 @@
             padding: 12px;
             border-radius: 8px;
             border-left: 4px solid #c33;
-            display: none;
-        }
-
-        .success-message {
-            background: #efe;
-            color: #363;
-            padding: 12px;
-            border-radius:8px;
             margin-bottom: 20px;
-            border-left: 4px solid #363;
-            display: none;
+            font-size: 0.95rem;
         }
 
         @media (max-width: 480px) {
@@ -207,45 +245,52 @@
             <p>Penerimaan peserta didik baru</p>
         </div>
 
-        <div id="errorMessage" class="errorMessage">
-             <i class="fas fa-exclamation-circle"></i>
-            
-        </div>
+        <?php if (!empty($error)): ?>
+            <div class="error-message">
+                 <i class="fas fa-exclamation-circle"></i> <?php echo $error; ?>
+            </div>
+        <?php endif; ?>
 
-        <div id="successMessage" class="successMessage">
-            <i class="fas fa-check-circle"></i>
-            
-        </div>
-
-        <form id="loginForm">
+        <form id="loginForm" method="POST" action="">
             <div class="form-group">
-                <label for="username"><i class="fas fa-user"></i></label>
-                <input type="text" id="username" name="username" required placeholder="Masukan NISN atau username">
+                <input type="text" id="username" name="username" required placeholder="Masukkan Nama atau Email">
             </div>
 
             <div class="form-group">
-                <label for="password"><i class="fas fa-lock"></i></label>
-                <input type="password" id="password" required placeholder="Masukan Password">
-                <i class="fas fa-eye eye-icon" id="tongglePassword"></i>
+                <input type="password" id="password" name="password" required placeholder="Masukkan Password">
+                <i class="fas fa-eye eye-icon" id="togglePassword"></i>
             </div>
 
             <div class="options">
               <label class="remember-me">
-                <input type="checkbox" id="remember"> Ingat saya
+                <input type="checkbox" id="remember" name="remember"> Ingat saya
               </label>
               <a href="#" class="forgot-password">Lupa Password</a>
             </div>
 
             <button type="submit" class="Login-btn" id="Login-btn">
-             <span id="btnText">Masuk</span>
-             <span id="btnSpinner" style="display: none;"><i class="fas fa-spinner fa-spin"></i></span>
+                 <span id="btnText">Masuk</span>
             </button>
         </form>
 
         <div class="divider">
-          <button>Belum punya akun</button>
+          <span>Belum punya akun?</span>
         </div>
 
-        <a href="#" class="Login-btn" style="background: #28a745; font-size: 1rem;"><i class="fas fa-user-plus"></i></a>
+        <a href="register.php" class="Login-btn" style="background: #28a745; font-size: 1rem;">
+            <i class="fas fa-user-plus"></i> Daftar Akun Baru
+        </a>
     </div>
+
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
+
+        togglePassword.addEventListener('click', function () {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
 </body>
+</html>
